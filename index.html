@@ -1,474 +1,1390 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="./results.css"  />
-    <link rel="stylesheet" href="./menu.css"  />
-    <title>Simulation Results</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+    <link rel="stylesheet" href="./assets/simple_modal.css"/>
+    <link rel="stylesheet" href="./assets/results.css"/>
+    <link rel="stylesheet" href="./assets/simple_modal_min.css"/>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            padding: 90px 0 0;
+            box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+            z-index: 99;
+        }
+
+        @media (max-width: 767.98px) {
+            .sidebar {
+                top: 11.5rem;
+                padding: 0;
+            }
+        }
+            
+        .navbar {
+            box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .1);
+        }
+
+        @media (min-width: 767.98px) {
+            .navbar {
+                top: 0;
+                position: sticky;
+                z-index: 999;
+            }
+        }
+
+        .sidebar .nav-link {
+            color: #333;
+        }
+
+        .sidebar .nav-link.active {
+            color: #0d6efd;
+        }
+    </style>
 </head>
 <body>
+    <nav class="navbar navbar-light bg-light p-3">
+        <div class="d-flex col-12 col-md-3 col-lg-2 mb-2 mb-lg-0 flex-wrap flex-md-nowrap justify-content-between">
+            <a class="navbar-brand" href="#">
+                <h2 style="font-family:courier,arial,helvetica;">Unreliable Football Analysis</h2>
+            </a>
+            <button class="navbar-toggler d-md-none collapsed mb-3" type="button" data-toggle="collapse" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div class="col-12 col-md-5 col-lg-8 d-flex align-items-center justify-content-md-end mt-3 mt-md-0">
+            <div>
+                <div class="w3-bar">
+                    <button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "sourcedata" style="padding: 4px 16px;">Source Data</button>
+                    <button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "disclaimer" style="padding: 4px 16px;">Disclaimer</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <main class="col-md-12 ml-sm-auto col-lg-12 px-md-4 py-4">
+                <p>Almost certainly unreliable and all for fun, if you chose to use any of this data it's entirely on you.</p>
+                <div class="row">
+                    <div class="col-12 col-xl-12 mb-4 mb-lg-0">
+                        <div class="card">
+                            <h5 class="card-header">Predicted Matches</h5>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                  <table>
+                                    <tr>
+                                      <th>Division</th>
+                                      <th>Home Team</th>
+                                      <th>Away Team</th>
+                                      <th>Home Win %</th>
+                                      <th>Draw %</th>
+                                      <th>Away Win %</th>
+                                      <th>B365 Home Win</th>
+                                      <th>B365 Draw</th>
+                                      <th>B365 Away Win</th>
+                                      <th>Most Likely Score</th>
+                                      <th>Prediction</th>
+                                      <th>B365 Prediction</th>
+                                      <th>Results Breakdown</th>
+                                  </tr>
+                              
+                                  
+                                      <tr>
+                                          <td>E1</td>
+                                          <td>Cardiff</td>
+                                          <td>Stoke</td>
+                                          <td>95</td>
+                                          <td>5</td>
+                                          <td>0</td>
+                                          <td>2.2</td>
+                                          <td>3.1</td>
+                                          <td>3.5</td>
+                                          <td>2-1</td>
+                                          <td>Home Win</td>
+                                          <td>Home Win</td>
+                                          <td><button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "modal_1" style="padding: 4px 16px;">Report</button></td>
+                                      </tr>
+                                  
+                                      <tr>
+                                          <td>E1</td>
+                                          <td>Derby</td>
+                                          <td>Brentford</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>100</td>
+                                          <td>4.2</td>
+                                          <td>3.4</td>
+                                          <td>1.9</td>
+                                          <td>0-1</td>
+                                          <td>Away Win</td>
+                                          <td>Away Win</td>
+                                          <td><button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "modal_2" style="padding: 4px 16px;">Report</button></td>
+                                      </tr>
+                                  
+                                      <tr>
+                                          <td>E1</td>
+                                          <td>Luton</td>
+                                          <td>Coventry</td>
+                                          <td>11</td>
+                                          <td>45</td>
+                                          <td>44</td>
+                                          <td>3.2</td>
+                                          <td>3.1</td>
+                                          <td>2.45</td>
+                                          <td>1-2</td>
+                                          <td>Away Win</td>
+                                          <td>Away Win</td>
+                                          <td><button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "modal_3" style="padding: 4px 16px;">Report</button></td>
+                                      </tr>
+                                  
+                                      <tr>
+                                          <td>E1</td>
+                                          <td>Middlesbrough</td>
+                                          <td>Preston</td>
+                                          <td>84</td>
+                                          <td>15</td>
+                                          <td>1</td>
+                                          <td>1.8</td>
+                                          <td>3.5</td>
+                                          <td>4.5</td>
+                                          <td>2-1</td>
+                                          <td>Home Win</td>
+                                          <td>Home Win</td>
+                                          <td><button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "modal_4" style="padding: 4px 16px;">Report</button></td>
+                                      </tr>
+                                  
+                                      <tr>
+                                          <td>E1</td>
+                                          <td>Rotherham</td>
+                                          <td>Watford</td>
+                                          <td>0</td>
+                                          <td>6</td>
+                                          <td>94</td>
+                                          <td>5.5</td>
+                                          <td>3.8</td>
+                                          <td>1.61</td>
+                                          <td>0-2</td>
+                                          <td>Away Win</td>
+                                          <td>Away Win</td>
+                                          <td><button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "modal_5" style="padding: 4px 16px;">Report</button></td>
+                                      </tr>
+                                  
+                                      <tr>
+                                          <td>E1</td>
+                                          <td>Bournemouth</td>
+                                          <td>Swansea</td>
+                                          <td>17</td>
+                                          <td>59</td>
+                                          <td>24</td>
+                                          <td>2.05</td>
+                                          <td>3.4</td>
+                                          <td>3.6</td>
+                                          <td>2-2</td>
+                                          <td>Draw</td>
+                                          <td>Home Win</td>
+                                          <td><button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "modal_6" style="padding: 4px 16px;">Report</button></td>
+                                      </tr>
+                                  
+                                      <tr>
+                                          <td>E1</td>
+                                          <td>Nott'm Forest</td>
+                                          <td>Norwich</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>100</td>
+                                          <td>4.0</td>
+                                          <td>3.5</td>
+                                          <td>1.9</td>
+                                          <td>1-3</td>
+                                          <td>Away Win</td>
+                                          <td>Away Win</td>
+                                          <td><button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "modal_7" style="padding: 4px 16px;">Report</button></td>
+                                      </tr>
+                                  
+                                      <tr>
+                                          <td>E1</td>
+                                          <td>QPR</td>
+                                          <td>Millwall</td>
+                                          <td>13</td>
+                                          <td>57</td>
+                                          <td>30</td>
+                                          <td>2.5</td>
+                                          <td>3.1</td>
+                                          <td>3.1</td>
+                                          <td>1-1</td>
+                                          <td>Draw</td>
+                                          <td>Home Win</td>
+                                          <td><button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "modal_8" style="padding: 4px 16px;">Report</button></td>
+                                      </tr>
+                                  
+                                      <tr>
+                                          <td>E1</td>
+                                          <td>Wycombe</td>
+                                          <td>Barnsley</td>
+                                          <td>0</td>
+                                          <td>0</td>
+                                          <td>100</td>
+                                          <td>4.75</td>
+                                          <td>3.5</td>
+                                          <td>1.8</td>
+                                          <td>0-2</td>
+                                          <td>Away Win</td>
+                                          <td>Away Win</td>
+                                          <td><button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "modal_9" style="padding: 4px 16px;">Report</button></td>
+                                      </tr>
+                                  
+                                      <tr>
+                                          <td>E1</td>
+                                          <td>Birmingham</td>
+                                          <td>Reading</td>
+                                          <td>3</td>
+                                          <td>86</td>
+                                          <td>11</td>
+                                          <td>3.6</td>
+                                          <td>3.2</td>
+                                          <td>2.15</td>
+                                          <td>1-1</td>
+                                          <td>Draw</td>
+                                          <td>Away Win</td>
+                                          <td><button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "modal_10" style="padding: 4px 16px;">Report</button></td>
+                                      </tr>
+                                  
+                                      <tr>
+                                          <td>E1</td>
+                                          <td>Blackburn</td>
+                                          <td>Bristol City</td>
+                                          <td>0</td>
+                                          <td>3</td>
+                                          <td>97</td>
+                                          <td>1.75</td>
+                                          <td>3.6</td>
+                                          <td>5.0</td>
+                                          <td>1-3</td>
+                                          <td>Away Win</td>
+                                          <td>Home Win</td>
+                                          <td><button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "modal_11" style="padding: 4px 16px;">Report</button></td>
+                                      </tr>
+                                  
+                                      <tr>
+                                          <td>E1</td>
+                                          <td>Sheffield Weds</td>
+                                          <td>Huddersfield</td>
+                                          <td>47</td>
+                                          <td>52</td>
+                                          <td>1</td>
+                                          <td>2.62</td>
+                                          <td>3.2</td>
+                                          <td>2.8</td>
+                                          <td>1-1</td>
+                                          <td>Draw</td>
+                                          <td>Home Win</td>
+                                          <td><button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "modal_12" style="padding: 4px 16px;">Report</button></td>
+                                      </tr>
+                                  
+                                      <tr>
+                                          <td>E2</td>
+                                          <td>AFC Wimbledon</td>
+                                          <td>Wigan</td>
+                                          <td>0</td>
+                                          <td>4</td>
+                                          <td>96</td>
+                                          <td>2.45</td>
+                                          <td>3.3</td>
+                                          <td>2.9</td>
+                                          <td>1-2</td>
+                                          <td>Away Win</td>
+                                          <td>Home Win</td>
+                                          <td><button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "modal_13" style="padding: 4px 16px;">Report</button></td>
+                                      </tr>
+                                  
+                                      <tr>
+                                          <td>E2</td>
+                                          <td>Blackpool</td>
+                                          <td>Burton</td>
+                                          <td>5</td>
+                                          <td>33</td>
+                                          <td>63</td>
+                                          <td>1.95</td>
+                                          <td>3.3</td>
+                                          <td>4.2</td>
+                                          <td>1-2</td>
+                                          <td>Away Win</td>
+                                          <td>Home Win</td>
+                                          <td><button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "modal_14" style="padding: 4px 16px;">Report</button></td>
+                                      </tr>
+                                  
+                                      <tr>
+                                          <td>E2</td>
+                                          <td>Charlton</td>
+                                          <td>Bristol Rvs</td>
+                                          <td>1</td>
+                                          <td>78</td>
+                                          <td>21</td>
+                                          <td>1.9</td>
+                                          <td>3.5</td>
+                                          <td>4.33</td>
+                                          <td>1-1</td>
+                                          <td>Draw</td>
+                                          <td>Home Win</td>
+                                          <td><button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "modal_15" style="padding: 4px 16px;">Report</button></td>
+                                      </tr>
+                                  
+                                      <tr>
+                                          <td>E2</td>
+                                          <td>Lincoln</td>
+                                          <td>Gillingham</td>
+                                          <td>21</td>
+                                          <td>47</td>
+                                          <td>32</td>
+                                          <td>2.0</td>
+                                          <td>3.4</td>
+                                          <td>3.8</td>
+                                          <td>2-2</td>
+                                          <td>Draw</td>
+                                          <td>Home Win</td>
+                                          <td><button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "modal_16" style="padding: 4px 16px;">Report</button></td>
+                                      </tr>
+                                  
+                                      <tr>
+                                          <td>E2</td>
+                                          <td>Milton Keynes Dons</td>
+                                          <td>Plymouth</td>
+                                          <td>40</td>
+                                          <td>57</td>
+                                          <td>3</td>
+                                          <td>1.9</td>
+                                          <td>3.6</td>
+                                          <td>4.0</td>
+                                          <td>1-1</td>
+                                          <td>Draw</td>
+                                          <td>Home Win</td>
+                                          <td><button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "modal_17" style="padding: 4px 16px;">Report</button></td>
+                                      </tr>
+                                  
+                                      <tr>
+                                          <td>E2</td>
+                                          <td>Oxford</td>
+                                          <td>Doncaster</td>
+                                          <td>0</td>
+                                          <td>89</td>
+                                          <td>11</td>
+                                          <td>2.15</td>
+                                          <td>3.4</td>
+                                          <td>3.4</td>
+                                          <td>1-1</td>
+                                          <td>Draw</td>
+                                          <td>Home Win</td>
+                                          <td><button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "modal_18" style="padding: 4px 16px;">Report</button></td>
+                                      </tr>
+                                  
+                                      <tr>
+                                          <td>E2</td>
+                                          <td>Peterboro</td>
+                                          <td>Portsmouth</td>
+                                          <td>79</td>
+                                          <td>21</td>
+                                          <td>0</td>
+                                          <td>1.95</td>
+                                          <td>3.4</td>
+                                          <td>4.0</td>
+                                          <td>2-1</td>
+                                          <td>Home Win</td>
+                                          <td>Home Win</td>
+                                          <td><button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "modal_19" style="padding: 4px 16px;">Report</button></td>
+                                      </tr>
+                                  
+                                      <tr>
+                                          <td>E2</td>
+                                          <td>Fleetwood Town</td>
+                                          <td>Ipswich</td>
+                                          <td>5</td>
+                                          <td>40</td>
+                                          <td>55</td>
+                                          <td>2.6</td>
+                                          <td>3.0</td>
+                                          <td>3.0</td>
+                                          <td>2-2</td>
+                                          <td>Draw</td>
+                                          <td>Home Win</td>
+                                          <td><button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "modal_20" style="padding: 4px 16px;">Report</button></td>
+                                      </tr>
+                                  
+                                      <tr>
+                                          <td>E2</td>
+                                          <td>Accrington</td>
+                                          <td>Sunderland</td>
+                                          <td>1</td>
+                                          <td>26</td>
+                                          <td>73</td>
+                                          <td>3.8</td>
+                                          <td>3.5</td>
+                                          <td>2.0</td>
+                                          <td>1-2</td>
+                                          <td>Away Win</td>
+                                          <td>Away Win</td>
+                                          <td><button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "modal_21" style="padding: 4px 16px;">Report</button></td>
+                                      </tr>
+                                  
+                                      <tr>
+                                          <td>E3</td>
+                                          <td>Cheltenham</td>
+                                          <td>Barrow</td>
+                                          <td>72</td>
+                                          <td>26</td>
+                                          <td>2</td>
+                                          <td>1.95</td>
+                                          <td>3.3</td>
+                                          <td>4.33</td>
+                                          <td>2-1</td>
+                                          <td>Home Win</td>
+                                          <td>Home Win</td>
+                                          <td><button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "modal_22" style="padding: 4px 16px;">Report</button></td>
+                                      </tr>
+                                  
+                                      <tr>
+                                          <td>E3</td>
+                                          <td>Crawley Town</td>
+                                          <td>Walsall</td>
+                                          <td>97</td>
+                                          <td>3</td>
+                                          <td>0</td>
+                                          <td>2.1</td>
+                                          <td>3.4</td>
+                                          <td>3.5</td>
+                                          <td>1-0</td>
+                                          <td>Home Win</td>
+                                          <td>Home Win</td>
+                                          <td><button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "modal_23" style="padding: 4px 16px;">Report</button></td>
+                                      </tr>
+                                  
+                                      <tr>
+                                          <td>E3</td>
+                                          <td>Mansfield</td>
+                                          <td>Carlisle</td>
+                                          <td>0</td>
+                                          <td>37</td>
+                                          <td>63</td>
+                                          <td>2.45</td>
+                                          <td>3.1</td>
+                                          <td>3.1</td>
+                                          <td>1-2</td>
+                                          <td>Away Win</td>
+                                          <td>Home Win</td>
+                                          <td><button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "modal_24" style="padding: 4px 16px;">Report</button></td>
+                                      </tr>
+                                  
+                                      <tr>
+                                          <td>E3</td>
+                                          <td>Port Vale</td>
+                                          <td>Newport County</td>
+                                          <td>0</td>
+                                          <td>5</td>
+                                          <td>95</td>
+                                          <td>2.62</td>
+                                          <td>3.1</td>
+                                          <td>2.9</td>
+                                          <td>0-2</td>
+                                          <td>Away Win</td>
+                                          <td>Home Win</td>
+                                          <td><button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "modal_25" style="padding: 4px 16px;">Report</button></td>
+                                      </tr>
+                                  
+                                      <tr>
+                                          <td>E3</td>
+                                          <td>Salford</td>
+                                          <td>Colchester</td>
+                                          <td>50</td>
+                                          <td>49</td>
+                                          <td>1</td>
+                                          <td>1.6</td>
+                                          <td>3.6</td>
+                                          <td>6.5</td>
+                                          <td>1-0</td>
+                                          <td>Home Win</td>
+                                          <td>Home Win</td>
+                                          <td><button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "modal_26" style="padding: 4px 16px;">Report</button></td>
+                                      </tr>
+                                  
+                                      <tr>
+                                          <td>E3</td>
+                                          <td>Scunthorpe</td>
+                                          <td>Oldham</td>
+                                          <td>10</td>
+                                          <td>62</td>
+                                          <td>28</td>
+                                          <td>2.4</td>
+                                          <td>3.25</td>
+                                          <td>3.0</td>
+                                          <td>1-1</td>
+                                          <td>Draw</td>
+                                          <td>Home Win</td>
+                                          <td><button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "modal_27" style="padding: 4px 16px;">Report</button></td>
+                                      </tr>
+                                  
+                                      <tr>
+                                          <td>E3</td>
+                                          <td>Grimsby</td>
+                                          <td>Tranmere</td>
+                                          <td>0</td>
+                                          <td>4</td>
+                                          <td>96</td>
+                                          <td>4.0</td>
+                                          <td>3.5</td>
+                                          <td>1.95</td>
+                                          <td>1-2</td>
+                                          <td>Away Win</td>
+                                          <td>Away Win</td>
+                                          <td><button class="simple-modal-trigger w3-button w3-round-large w3-border" data-trigger-modal-id = "modal_28" style="padding: 4px 16px;">Report</button></td>
+                                      </tr>
+                                  
+                                    
+                                </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
 
-<div>
-    <h1>Unreliable Football Analysis</h1>
-    <a href="#" class="btn">Home</a>
-    <a href="#" class="btn">Analysis</a>
-    <a href="#" class="btn">Value Predictions</a>
-</div>
+    
+        <div class="simple-modal-wrapper" data-modal-id="modal_1" data-animation-duration="200">
+            <div class="modal-content">
 
-Some probably unreliable and almost certainly incorrect football analysis and predictions.  Anything you choose to do with the data shown in this website is entirely at your own risk.
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Analysis: Cardiff v Stoke</p>
 
-<table>
-    <tr>
-        <th>Division</th>
-        <th>Home Team</th>
-        <th>Away Team</th>
-        <th>Home Win %</th>
-        <th>Draw %</th>
-        <th>Away Win %</th>
-        <th>Most Likely Score</th>
-        <th>B365 Home Win</th>
-        <th>B365 Draw</th>
-        <th>B365 Away Win</th>
-        <th>Results Breakdown</th>
-    </tr>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-7 col-xl-7 mb-4 mb-lg-0" style="background-image:url('./images/pitch.jpg'); background-size: 100% 100%;">
+                            <table class="w3-table-all" style="width: 50%; margin: 0 auto; margin-top: 40px; border: 2px solid #CCC;">
+                                <tr><td>Home Team</td><td>Cardiff</td></tr>
+                                <tr><td>Away Team</td><td>Stoke</td></tr>
+                                <tr><td>Home Win %</td><td>95</td></tr>
+                                <tr><td>Draw %</td><td>5</td></tr>
+                                <tr><td>Away Win %</td><td>0</td></tr>
+                                <tr><td>Most Likely Result</td><td>2-1</td></tr>
+                                <tr><td>B365 Home Win</td><td>2.2</td></tr>
+                                <tr><td>B365 Draw</td><td>3.1</td></tr>
+                                <tr><td>B365 Away Win</td><td>3.5</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-5 col-xl-5 mb-4 mb-lg-0">
+                            <img src="./data/match_graphs/Cardiff_v_Stoke.png" width="100%" style="margin: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="simple-modal-wrapper" data-modal-id="modal_2" data-animation-duration="200">
+            <div class="modal-content">
 
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Analysis: Derby v Brentford</p>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-7 col-xl-7 mb-4 mb-lg-0" style="background-image:url('./images/pitch.jpg'); background-size: 100% 100%;">
+                            <table class="w3-table-all" style="width: 50%; margin: 0 auto; margin-top: 40px; border: 2px solid #CCC;">
+                                <tr><td>Home Team</td><td>Derby</td></tr>
+                                <tr><td>Away Team</td><td>Brentford</td></tr>
+                                <tr><td>Home Win %</td><td>0</td></tr>
+                                <tr><td>Draw %</td><td>0</td></tr>
+                                <tr><td>Away Win %</td><td>100</td></tr>
+                                <tr><td>Most Likely Result</td><td>0-1</td></tr>
+                                <tr><td>B365 Home Win</td><td>4.2</td></tr>
+                                <tr><td>B365 Draw</td><td>3.4</td></tr>
+                                <tr><td>B365 Away Win</td><td>1.9</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-5 col-xl-5 mb-4 mb-lg-0">
+                            <img src="./data/match_graphs/Derby_v_Brentford.png" width="100%" style="margin: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     
-        <tr>
-            <td>E0</td>
-            <td>Newcastle</td>
-            <td>Aston Villa</td>
-            <td>44.44</td>
-            <td>55.51</td>
-            <td>0.05</td>
-            <td>1-1</td>
-            <td>3.8</td>
-            <td>3.3</td>
-            <td>2.05</td>
-            <td><a href="c:\temp\Newcastle_v_Aston Villa.png"" target="_blank">Detailed Report</a></td>
-        </tr>
+        <div class="simple-modal-wrapper" data-modal-id="modal_3" data-animation-duration="200">
+            <div class="modal-content">
+
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Analysis: Luton v Coventry</p>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-7 col-xl-7 mb-4 mb-lg-0" style="background-image:url('./images/pitch.jpg'); background-size: 100% 100%;">
+                            <table class="w3-table-all" style="width: 50%; margin: 0 auto; margin-top: 40px; border: 2px solid #CCC;">
+                                <tr><td>Home Team</td><td>Luton</td></tr>
+                                <tr><td>Away Team</td><td>Coventry</td></tr>
+                                <tr><td>Home Win %</td><td>11</td></tr>
+                                <tr><td>Draw %</td><td>45</td></tr>
+                                <tr><td>Away Win %</td><td>44</td></tr>
+                                <tr><td>Most Likely Result</td><td>1-2</td></tr>
+                                <tr><td>B365 Home Win</td><td>3.2</td></tr>
+                                <tr><td>B365 Draw</td><td>3.1</td></tr>
+                                <tr><td>B365 Away Win</td><td>2.45</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-5 col-xl-5 mb-4 mb-lg-0">
+                            <img src="./data/match_graphs/Luton_v_Coventry.png" width="100%" style="margin: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     
-        <tr>
-            <td>E0</td>
-            <td>Leeds</td>
-            <td>Chelsea</td>
-            <td>0.65</td>
-            <td>69.78</td>
-            <td>29.57</td>
-            <td>1-1</td>
-            <td>4.75</td>
-            <td>4.0</td>
-            <td>1.7</td>
-            <td><a href="c:\temp\Leeds_v_Chelsea.png"" target="_blank">Detailed Report</a></td>
-        </tr>
+        <div class="simple-modal-wrapper" data-modal-id="modal_4" data-animation-duration="200">
+            <div class="modal-content">
+
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Analysis: Middlesbrough v Preston</p>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-7 col-xl-7 mb-4 mb-lg-0" style="background-image:url('./images/pitch.jpg'); background-size: 100% 100%;">
+                            <table class="w3-table-all" style="width: 50%; margin: 0 auto; margin-top: 40px; border: 2px solid #CCC;">
+                                <tr><td>Home Team</td><td>Middlesbrough</td></tr>
+                                <tr><td>Away Team</td><td>Preston</td></tr>
+                                <tr><td>Home Win %</td><td>84</td></tr>
+                                <tr><td>Draw %</td><td>15</td></tr>
+                                <tr><td>Away Win %</td><td>1</td></tr>
+                                <tr><td>Most Likely Result</td><td>2-1</td></tr>
+                                <tr><td>B365 Home Win</td><td>1.8</td></tr>
+                                <tr><td>B365 Draw</td><td>3.5</td></tr>
+                                <tr><td>B365 Away Win</td><td>4.5</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-5 col-xl-5 mb-4 mb-lg-0">
+                            <img src="./data/match_graphs/Middlesbrough_v_Preston.png" width="100%" style="margin: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     
-        <tr>
-            <td>E0</td>
-            <td>Crystal Palace</td>
-            <td>West Brom</td>
-            <td>8.91</td>
-            <td>84.68</td>
-            <td>6.41</td>
-            <td>1-1</td>
-            <td>2.15</td>
-            <td>3.2</td>
-            <td>3.6</td>
-            <td><a href="c:\temp\Crystal Palace_v_West Brom.png"" target="_blank">Detailed Report</a></td>
-        </tr>
+        <div class="simple-modal-wrapper" data-modal-id="modal_5" data-animation-duration="200">
+            <div class="modal-content">
+
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Analysis: Rotherham v Watford</p>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-7 col-xl-7 mb-4 mb-lg-0" style="background-image:url('./images/pitch.jpg'); background-size: 100% 100%;">
+                            <table class="w3-table-all" style="width: 50%; margin: 0 auto; margin-top: 40px; border: 2px solid #CCC;">
+                                <tr><td>Home Team</td><td>Rotherham</td></tr>
+                                <tr><td>Away Team</td><td>Watford</td></tr>
+                                <tr><td>Home Win %</td><td>0</td></tr>
+                                <tr><td>Draw %</td><td>6</td></tr>
+                                <tr><td>Away Win %</td><td>94</td></tr>
+                                <tr><td>Most Likely Result</td><td>0-2</td></tr>
+                                <tr><td>B365 Home Win</td><td>5.5</td></tr>
+                                <tr><td>B365 Draw</td><td>3.8</td></tr>
+                                <tr><td>B365 Away Win</td><td>1.61</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-5 col-xl-5 mb-4 mb-lg-0">
+                            <img src="./data/match_graphs/Rotherham_v_Watford.png" width="100%" style="margin: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     
-        <tr>
-            <td>E0</td>
-            <td>Everton</td>
-            <td>Burnley</td>
-            <td>62.68</td>
-            <td>36.76</td>
-            <td>0.56</td>
-            <td>2-1</td>
-            <td>1.83</td>
-            <td>3.5</td>
-            <td>4.5</td>
-            <td><a href="c:\temp\Everton_v_Burnley.png"" target="_blank">Detailed Report</a></td>
-        </tr>
+        <div class="simple-modal-wrapper" data-modal-id="modal_6" data-animation-duration="200">
+            <div class="modal-content">
+
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Analysis: Bournemouth v Swansea</p>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-7 col-xl-7 mb-4 mb-lg-0" style="background-image:url('./images/pitch.jpg'); background-size: 100% 100%;">
+                            <table class="w3-table-all" style="width: 50%; margin: 0 auto; margin-top: 40px; border: 2px solid #CCC;">
+                                <tr><td>Home Team</td><td>Bournemouth</td></tr>
+                                <tr><td>Away Team</td><td>Swansea</td></tr>
+                                <tr><td>Home Win %</td><td>17</td></tr>
+                                <tr><td>Draw %</td><td>59</td></tr>
+                                <tr><td>Away Win %</td><td>24</td></tr>
+                                <tr><td>Most Likely Result</td><td>2-2</td></tr>
+                                <tr><td>B365 Home Win</td><td>2.05</td></tr>
+                                <tr><td>B365 Draw</td><td>3.4</td></tr>
+                                <tr><td>B365 Away Win</td><td>3.6</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-5 col-xl-5 mb-4 mb-lg-0">
+                            <img src="./data/match_graphs/Bournemouth_v_Swansea.png" width="100%" style="margin: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     
-        <tr>
-            <td>E0</td>
-            <td>Fulham</td>
-            <td>Man City</td>
-            <td>0</td>
-            <td>2.53</td>
-            <td>97.47</td>
-            <td>1-2</td>
-            <td>10.0</td>
-            <td>5.0</td>
-            <td>1.33</td>
-            <td><a href="c:\temp\Fulham_v_Man City.png"" target="_blank">Detailed Report</a></td>
-        </tr>
+        <div class="simple-modal-wrapper" data-modal-id="modal_7" data-animation-duration="200">
+            <div class="modal-content">
+
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Analysis: Nott'm Forest v Norwich</p>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-7 col-xl-7 mb-4 mb-lg-0" style="background-image:url('./images/pitch.jpg'); background-size: 100% 100%;">
+                            <table class="w3-table-all" style="width: 50%; margin: 0 auto; margin-top: 40px; border: 2px solid #CCC;">
+                                <tr><td>Home Team</td><td>Nott'm Forest</td></tr>
+                                <tr><td>Away Team</td><td>Norwich</td></tr>
+                                <tr><td>Home Win %</td><td>0</td></tr>
+                                <tr><td>Draw %</td><td>0</td></tr>
+                                <tr><td>Away Win %</td><td>100</td></tr>
+                                <tr><td>Most Likely Result</td><td>1-3</td></tr>
+                                <tr><td>B365 Home Win</td><td>4.0</td></tr>
+                                <tr><td>B365 Draw</td><td>3.5</td></tr>
+                                <tr><td>B365 Away Win</td><td>1.9</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-5 col-xl-5 mb-4 mb-lg-0">
+                            <img src="./data/match_graphs/Nott'm Forest_v_Norwich.png" width="100%" style="margin: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     
-        <tr>
-            <td>E0</td>
-            <td>Southampton</td>
-            <td>Brighton</td>
-            <td>21.04</td>
-            <td>76.42</td>
-            <td>2.54</td>
-            <td>1-1</td>
-            <td>2.9</td>
-            <td>3.1</td>
-            <td>2.5</td>
-            <td><a href="c:\temp\Southampton_v_Brighton.png"" target="_blank">Detailed Report</a></td>
-        </tr>
+        <div class="simple-modal-wrapper" data-modal-id="modal_8" data-animation-duration="200">
+            <div class="modal-content">
+
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Analysis: QPR v Millwall</p>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-7 col-xl-7 mb-4 mb-lg-0" style="background-image:url('./images/pitch.jpg'); background-size: 100% 100%;">
+                            <table class="w3-table-all" style="width: 50%; margin: 0 auto; margin-top: 40px; border: 2px solid #CCC;">
+                                <tr><td>Home Team</td><td>QPR</td></tr>
+                                <tr><td>Away Team</td><td>Millwall</td></tr>
+                                <tr><td>Home Win %</td><td>13</td></tr>
+                                <tr><td>Draw %</td><td>57</td></tr>
+                                <tr><td>Away Win %</td><td>30</td></tr>
+                                <tr><td>Most Likely Result</td><td>1-1</td></tr>
+                                <tr><td>B365 Home Win</td><td>2.5</td></tr>
+                                <tr><td>B365 Draw</td><td>3.1</td></tr>
+                                <tr><td>B365 Away Win</td><td>3.1</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-5 col-xl-5 mb-4 mb-lg-0">
+                            <img src="./data/match_graphs/QPR_v_Millwall.png" width="100%" style="margin: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     
-        <tr>
-            <td>E0</td>
-            <td>Leicester</td>
-            <td>Sheffield United</td>
-            <td>99.95</td>
-            <td>0.05</td>
-            <td>0</td>
-            <td>2-0</td>
-            <td>1.5</td>
-            <td>4.2</td>
-            <td>6.5</td>
-            <td><a href="c:\temp\Leicester_v_Sheffield United.png"" target="_blank">Detailed Report</a></td>
-        </tr>
+        <div class="simple-modal-wrapper" data-modal-id="modal_9" data-animation-duration="200">
+            <div class="modal-content">
+
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Analysis: Wycombe v Barnsley</p>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-7 col-xl-7 mb-4 mb-lg-0" style="background-image:url('./images/pitch.jpg'); background-size: 100% 100%;">
+                            <table class="w3-table-all" style="width: 50%; margin: 0 auto; margin-top: 40px; border: 2px solid #CCC;">
+                                <tr><td>Home Team</td><td>Wycombe</td></tr>
+                                <tr><td>Away Team</td><td>Barnsley</td></tr>
+                                <tr><td>Home Win %</td><td>0</td></tr>
+                                <tr><td>Draw %</td><td>0</td></tr>
+                                <tr><td>Away Win %</td><td>100</td></tr>
+                                <tr><td>Most Likely Result</td><td>0-2</td></tr>
+                                <tr><td>B365 Home Win</td><td>4.75</td></tr>
+                                <tr><td>B365 Draw</td><td>3.5</td></tr>
+                                <tr><td>B365 Away Win</td><td>1.8</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-5 col-xl-5 mb-4 mb-lg-0">
+                            <img src="./data/match_graphs/Wycombe_v_Barnsley.png" width="100%" style="margin: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     
-        <tr>
-            <td>E0</td>
-            <td>Arsenal</td>
-            <td>Tottenham</td>
-            <td>2.94</td>
-            <td>42.63</td>
-            <td>54.43</td>
-            <td>2-2</td>
-            <td>2.55</td>
-            <td>3.4</td>
-            <td>2.75</td>
-            <td><a href="c:\temp\Arsenal_v_Tottenham.png"" target="_blank">Detailed Report</a></td>
-        </tr>
+        <div class="simple-modal-wrapper" data-modal-id="modal_10" data-animation-duration="200">
+            <div class="modal-content">
+
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Analysis: Birmingham v Reading</p>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-7 col-xl-7 mb-4 mb-lg-0" style="background-image:url('./images/pitch.jpg'); background-size: 100% 100%;">
+                            <table class="w3-table-all" style="width: 50%; margin: 0 auto; margin-top: 40px; border: 2px solid #CCC;">
+                                <tr><td>Home Team</td><td>Birmingham</td></tr>
+                                <tr><td>Away Team</td><td>Reading</td></tr>
+                                <tr><td>Home Win %</td><td>3</td></tr>
+                                <tr><td>Draw %</td><td>86</td></tr>
+                                <tr><td>Away Win %</td><td>11</td></tr>
+                                <tr><td>Most Likely Result</td><td>1-1</td></tr>
+                                <tr><td>B365 Home Win</td><td>3.6</td></tr>
+                                <tr><td>B365 Draw</td><td>3.2</td></tr>
+                                <tr><td>B365 Away Win</td><td>2.15</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-5 col-xl-5 mb-4 mb-lg-0">
+                            <img src="./data/match_graphs/Birmingham_v_Reading.png" width="100%" style="margin: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     
-        <tr>
-            <td>E0</td>
-            <td>Man United</td>
-            <td>West Ham</td>
-            <td>1.98</td>
-            <td>42.76</td>
-            <td>55.26</td>
-            <td>2-2</td>
-            <td>1.83</td>
-            <td>3.6</td>
-            <td>4.33</td>
-            <td><a href="c:\temp\Man United_v_West Ham.png"" target="_blank">Detailed Report</a></td>
-        </tr>
+        <div class="simple-modal-wrapper" data-modal-id="modal_11" data-animation-duration="200">
+            <div class="modal-content">
+
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Analysis: Blackburn v Bristol City</p>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-7 col-xl-7 mb-4 mb-lg-0" style="background-image:url('./images/pitch.jpg'); background-size: 100% 100%;">
+                            <table class="w3-table-all" style="width: 50%; margin: 0 auto; margin-top: 40px; border: 2px solid #CCC;">
+                                <tr><td>Home Team</td><td>Blackburn</td></tr>
+                                <tr><td>Away Team</td><td>Bristol City</td></tr>
+                                <tr><td>Home Win %</td><td>0</td></tr>
+                                <tr><td>Draw %</td><td>3</td></tr>
+                                <tr><td>Away Win %</td><td>97</td></tr>
+                                <tr><td>Most Likely Result</td><td>1-3</td></tr>
+                                <tr><td>B365 Home Win</td><td>1.75</td></tr>
+                                <tr><td>B365 Draw</td><td>3.6</td></tr>
+                                <tr><td>B365 Away Win</td><td>5.0</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-5 col-xl-5 mb-4 mb-lg-0">
+                            <img src="./data/match_graphs/Blackburn_v_Bristol City.png" width="100%" style="margin: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     
-        <tr>
-            <td>E0</td>
-            <td>Wolves</td>
-            <td>Liverpool</td>
-            <td>10.7</td>
-            <td>88.0</td>
-            <td>1.3</td>
-            <td>1-1</td>
-            <td>4.75</td>
-            <td>3.75</td>
-            <td>1.72</td>
-            <td><a href="c:\temp\Wolves_v_Liverpool.png"" target="_blank">Detailed Report</a></td>
-        </tr>
+        <div class="simple-modal-wrapper" data-modal-id="modal_12" data-animation-duration="200">
+            <div class="modal-content">
+
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Analysis: Sheffield Weds v Huddersfield</p>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-7 col-xl-7 mb-4 mb-lg-0" style="background-image:url('./images/pitch.jpg'); background-size: 100% 100%;">
+                            <table class="w3-table-all" style="width: 50%; margin: 0 auto; margin-top: 40px; border: 2px solid #CCC;">
+                                <tr><td>Home Team</td><td>Sheffield Weds</td></tr>
+                                <tr><td>Away Team</td><td>Huddersfield</td></tr>
+                                <tr><td>Home Win %</td><td>47</td></tr>
+                                <tr><td>Draw %</td><td>52</td></tr>
+                                <tr><td>Away Win %</td><td>1</td></tr>
+                                <tr><td>Most Likely Result</td><td>1-1</td></tr>
+                                <tr><td>B365 Home Win</td><td>2.62</td></tr>
+                                <tr><td>B365 Draw</td><td>3.2</td></tr>
+                                <tr><td>B365 Away Win</td><td>2.8</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-5 col-xl-5 mb-4 mb-lg-0">
+                            <img src="./data/match_graphs/Sheffield Weds_v_Huddersfield.png" width="100%" style="margin: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     
-        <tr>
-            <td>E1</td>
-            <td>Blackburn</td>
-            <td>Brentford</td>
-            <td>14.77</td>
-            <td>48.89</td>
-            <td>36.34</td>
-            <td>1-2</td>
-            <td>3.5</td>
-            <td>3.5</td>
-            <td>2.1</td>
-            <td><a href="c:\temp\Blackburn_v_Brentford.png"" target="_blank">Detailed Report</a></td>
-        </tr>
+        <div class="simple-modal-wrapper" data-modal-id="modal_13" data-animation-duration="200">
+            <div class="modal-content">
+
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Analysis: AFC Wimbledon v Wigan</p>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-7 col-xl-7 mb-4 mb-lg-0" style="background-image:url('./images/pitch.jpg'); background-size: 100% 100%;">
+                            <table class="w3-table-all" style="width: 50%; margin: 0 auto; margin-top: 40px; border: 2px solid #CCC;">
+                                <tr><td>Home Team</td><td>AFC Wimbledon</td></tr>
+                                <tr><td>Away Team</td><td>Wigan</td></tr>
+                                <tr><td>Home Win %</td><td>0</td></tr>
+                                <tr><td>Draw %</td><td>4</td></tr>
+                                <tr><td>Away Win %</td><td>96</td></tr>
+                                <tr><td>Most Likely Result</td><td>1-2</td></tr>
+                                <tr><td>B365 Home Win</td><td>2.45</td></tr>
+                                <tr><td>B365 Draw</td><td>3.3</td></tr>
+                                <tr><td>B365 Away Win</td><td>2.9</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-5 col-xl-5 mb-4 mb-lg-0">
+                            <img src="./data/match_graphs/AFC Wimbledon_v_Wigan.png" width="100%" style="margin: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     
-        <tr>
-            <td>E1</td>
-            <td>Luton</td>
-            <td>Swansea</td>
-            <td>0.94</td>
-            <td>33.99</td>
-            <td>65.07</td>
-            <td>1-2</td>
-            <td>3.5</td>
-            <td>3.2</td>
-            <td>2.2</td>
-            <td><a href="c:\temp\Luton_v_Swansea.png"" target="_blank">Detailed Report</a></td>
-        </tr>
+        <div class="simple-modal-wrapper" data-modal-id="modal_14" data-animation-duration="200">
+            <div class="modal-content">
+
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Analysis: Blackpool v Burton</p>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-7 col-xl-7 mb-4 mb-lg-0" style="background-image:url('./images/pitch.jpg'); background-size: 100% 100%;">
+                            <table class="w3-table-all" style="width: 50%; margin: 0 auto; margin-top: 40px; border: 2px solid #CCC;">
+                                <tr><td>Home Team</td><td>Blackpool</td></tr>
+                                <tr><td>Away Team</td><td>Burton</td></tr>
+                                <tr><td>Home Win %</td><td>5</td></tr>
+                                <tr><td>Draw %</td><td>33</td></tr>
+                                <tr><td>Away Win %</td><td>63</td></tr>
+                                <tr><td>Most Likely Result</td><td>1-2</td></tr>
+                                <tr><td>B365 Home Win</td><td>1.95</td></tr>
+                                <tr><td>B365 Draw</td><td>3.3</td></tr>
+                                <tr><td>B365 Away Win</td><td>4.2</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-5 col-xl-5 mb-4 mb-lg-0">
+                            <img src="./data/match_graphs/Blackpool_v_Burton.png" width="100%" style="margin: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     
-        <tr>
-            <td>E1</td>
-            <td>Birmingham</td>
-            <td>Bristol City</td>
-            <td>5.97</td>
-            <td>34.71</td>
-            <td>59.32</td>
-            <td>2-2</td>
-            <td>2.05</td>
-            <td>3.2</td>
-            <td>3.9</td>
-            <td><a href="c:\temp\Birmingham_v_Bristol City.png"" target="_blank">Detailed Report</a></td>
-        </tr>
+        <div class="simple-modal-wrapper" data-modal-id="modal_15" data-animation-duration="200">
+            <div class="modal-content">
+
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Analysis: Charlton v Bristol Rvs</p>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-7 col-xl-7 mb-4 mb-lg-0" style="background-image:url('./images/pitch.jpg'); background-size: 100% 100%;">
+                            <table class="w3-table-all" style="width: 50%; margin: 0 auto; margin-top: 40px; border: 2px solid #CCC;">
+                                <tr><td>Home Team</td><td>Charlton</td></tr>
+                                <tr><td>Away Team</td><td>Bristol Rvs</td></tr>
+                                <tr><td>Home Win %</td><td>1</td></tr>
+                                <tr><td>Draw %</td><td>78</td></tr>
+                                <tr><td>Away Win %</td><td>21</td></tr>
+                                <tr><td>Most Likely Result</td><td>1-1</td></tr>
+                                <tr><td>B365 Home Win</td><td>1.9</td></tr>
+                                <tr><td>B365 Draw</td><td>3.5</td></tr>
+                                <tr><td>B365 Away Win</td><td>4.33</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-5 col-xl-5 mb-4 mb-lg-0">
+                            <img src="./data/match_graphs/Charlton_v_Bristol Rvs.png" width="100%" style="margin: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     
-        <tr>
-            <td>E1</td>
-            <td>Bournemouth</td>
-            <td>Barnsley</td>
-            <td>3.77</td>
-            <td>30.92</td>
-            <td>65.31</td>
-            <td>1-2</td>
-            <td>2.2</td>
-            <td>3.4</td>
-            <td>3.3</td>
-            <td><a href="c:\temp\Bournemouth_v_Barnsley.png"" target="_blank">Detailed Report</a></td>
-        </tr>
+        <div class="simple-modal-wrapper" data-modal-id="modal_16" data-animation-duration="200">
+            <div class="modal-content">
+
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Analysis: Lincoln v Gillingham</p>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-7 col-xl-7 mb-4 mb-lg-0" style="background-image:url('./images/pitch.jpg'); background-size: 100% 100%;">
+                            <table class="w3-table-all" style="width: 50%; margin: 0 auto; margin-top: 40px; border: 2px solid #CCC;">
+                                <tr><td>Home Team</td><td>Lincoln</td></tr>
+                                <tr><td>Away Team</td><td>Gillingham</td></tr>
+                                <tr><td>Home Win %</td><td>21</td></tr>
+                                <tr><td>Draw %</td><td>47</td></tr>
+                                <tr><td>Away Win %</td><td>32</td></tr>
+                                <tr><td>Most Likely Result</td><td>2-2</td></tr>
+                                <tr><td>B365 Home Win</td><td>2.0</td></tr>
+                                <tr><td>B365 Draw</td><td>3.4</td></tr>
+                                <tr><td>B365 Away Win</td><td>3.8</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-5 col-xl-5 mb-4 mb-lg-0">
+                            <img src="./data/match_graphs/Lincoln_v_Gillingham.png" width="100%" style="margin: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     
-        <tr>
-            <td>E1</td>
-            <td>Cardiff</td>
-            <td>Watford</td>
-            <td>55.62</td>
-            <td>35.62</td>
-            <td>8.76</td>
-            <td>2-2</td>
-            <td>3.1</td>
-            <td>3.2</td>
-            <td>2.4</td>
-            <td><a href="c:\temp\Cardiff_v_Watford.png"" target="_blank">Detailed Report</a></td>
-        </tr>
+        <div class="simple-modal-wrapper" data-modal-id="modal_17" data-animation-duration="200">
+            <div class="modal-content">
+
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Analysis: Milton Keynes Dons v Plymouth</p>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-7 col-xl-7 mb-4 mb-lg-0" style="background-image:url('./images/pitch.jpg'); background-size: 100% 100%;">
+                            <table class="w3-table-all" style="width: 50%; margin: 0 auto; margin-top: 40px; border: 2px solid #CCC;">
+                                <tr><td>Home Team</td><td>Milton Keynes Dons</td></tr>
+                                <tr><td>Away Team</td><td>Plymouth</td></tr>
+                                <tr><td>Home Win %</td><td>40</td></tr>
+                                <tr><td>Draw %</td><td>57</td></tr>
+                                <tr><td>Away Win %</td><td>3</td></tr>
+                                <tr><td>Most Likely Result</td><td>1-1</td></tr>
+                                <tr><td>B365 Home Win</td><td>1.9</td></tr>
+                                <tr><td>B365 Draw</td><td>3.6</td></tr>
+                                <tr><td>B365 Away Win</td><td>4.0</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-5 col-xl-5 mb-4 mb-lg-0">
+                            <img src="./data/match_graphs/Milton Keynes Dons_v_Plymouth.png" width="100%" style="margin: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     
-        <tr>
-            <td>E1</td>
-            <td>Derby</td>
-            <td>Millwall</td>
-            <td>0.5</td>
-            <td>91.62</td>
-            <td>7.88</td>
-            <td>1-1</td>
-            <td>2.55</td>
-            <td>3.0</td>
-            <td>3.0</td>
-            <td><a href="c:\temp\Derby_v_Millwall.png"" target="_blank">Detailed Report</a></td>
-        </tr>
+        <div class="simple-modal-wrapper" data-modal-id="modal_18" data-animation-duration="200">
+            <div class="modal-content">
+
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Analysis: Oxford v Doncaster</p>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-7 col-xl-7 mb-4 mb-lg-0" style="background-image:url('./images/pitch.jpg'); background-size: 100% 100%;">
+                            <table class="w3-table-all" style="width: 50%; margin: 0 auto; margin-top: 40px; border: 2px solid #CCC;">
+                                <tr><td>Home Team</td><td>Oxford</td></tr>
+                                <tr><td>Away Team</td><td>Doncaster</td></tr>
+                                <tr><td>Home Win %</td><td>0</td></tr>
+                                <tr><td>Draw %</td><td>89</td></tr>
+                                <tr><td>Away Win %</td><td>11</td></tr>
+                                <tr><td>Most Likely Result</td><td>1-1</td></tr>
+                                <tr><td>B365 Home Win</td><td>2.15</td></tr>
+                                <tr><td>B365 Draw</td><td>3.4</td></tr>
+                                <tr><td>B365 Away Win</td><td>3.4</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-5 col-xl-5 mb-4 mb-lg-0">
+                            <img src="./data/match_graphs/Oxford_v_Doncaster.png" width="100%" style="margin: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     
-        <tr>
-            <td>E1</td>
-            <td>Middlesbrough</td>
-            <td>Stoke</td>
-            <td>51.09</td>
-            <td>40.38</td>
-            <td>8.53</td>
-            <td>2-1</td>
-            <td>2.2</td>
-            <td>3.1</td>
-            <td>3.6</td>
-            <td><a href="c:\temp\Middlesbrough_v_Stoke.png"" target="_blank">Detailed Report</a></td>
-        </tr>
+        <div class="simple-modal-wrapper" data-modal-id="modal_19" data-animation-duration="200">
+            <div class="modal-content">
+
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Analysis: Peterboro v Portsmouth</p>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-7 col-xl-7 mb-4 mb-lg-0" style="background-image:url('./images/pitch.jpg'); background-size: 100% 100%;">
+                            <table class="w3-table-all" style="width: 50%; margin: 0 auto; margin-top: 40px; border: 2px solid #CCC;">
+                                <tr><td>Home Team</td><td>Peterboro</td></tr>
+                                <tr><td>Away Team</td><td>Portsmouth</td></tr>
+                                <tr><td>Home Win %</td><td>79</td></tr>
+                                <tr><td>Draw %</td><td>21</td></tr>
+                                <tr><td>Away Win %</td><td>0</td></tr>
+                                <tr><td>Most Likely Result</td><td>2-1</td></tr>
+                                <tr><td>B365 Home Win</td><td>1.95</td></tr>
+                                <tr><td>B365 Draw</td><td>3.4</td></tr>
+                                <tr><td>B365 Away Win</td><td>4.0</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-5 col-xl-5 mb-4 mb-lg-0">
+                            <img src="./data/match_graphs/Peterboro_v_Portsmouth.png" width="100%" style="margin: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     
-        <tr>
-            <td>E1</td>
-            <td>Nott'm Forest</td>
-            <td>Reading</td>
-            <td>0.01</td>
-            <td>81.43</td>
-            <td>18.56</td>
-            <td>1-1</td>
-            <td>2.7</td>
-            <td>3.1</td>
-            <td>2.87</td>
-            <td><a href="c:\temp\Nott'm Forest_v_Reading.png"" target="_blank">Detailed Report</a></td>
-        </tr>
+        <div class="simple-modal-wrapper" data-modal-id="modal_20" data-animation-duration="200">
+            <div class="modal-content">
+
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Analysis: Fleetwood Town v Ipswich</p>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-7 col-xl-7 mb-4 mb-lg-0" style="background-image:url('./images/pitch.jpg'); background-size: 100% 100%;">
+                            <table class="w3-table-all" style="width: 50%; margin: 0 auto; margin-top: 40px; border: 2px solid #CCC;">
+                                <tr><td>Home Team</td><td>Fleetwood Town</td></tr>
+                                <tr><td>Away Team</td><td>Ipswich</td></tr>
+                                <tr><td>Home Win %</td><td>5</td></tr>
+                                <tr><td>Draw %</td><td>40</td></tr>
+                                <tr><td>Away Win %</td><td>55</td></tr>
+                                <tr><td>Most Likely Result</td><td>2-2</td></tr>
+                                <tr><td>B365 Home Win</td><td>2.6</td></tr>
+                                <tr><td>B365 Draw</td><td>3.0</td></tr>
+                                <tr><td>B365 Away Win</td><td>3.0</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-5 col-xl-5 mb-4 mb-lg-0">
+                            <img src="./data/match_graphs/Fleetwood Town_v_Ipswich.png" width="100%" style="margin: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     
-        <tr>
-            <td>E1</td>
-            <td>QPR</td>
-            <td>Huddersfield</td>
-            <td>7.81</td>
-            <td>52.36</td>
-            <td>39.83</td>
-            <td>1-1</td>
-            <td>2.0</td>
-            <td>3.5</td>
-            <td>3.8</td>
-            <td><a href="c:\temp\QPR_v_Huddersfield.png"" target="_blank">Detailed Report</a></td>
-        </tr>
+        <div class="simple-modal-wrapper" data-modal-id="modal_21" data-animation-duration="200">
+            <div class="modal-content">
+
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Analysis: Accrington v Sunderland</p>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-7 col-xl-7 mb-4 mb-lg-0" style="background-image:url('./images/pitch.jpg'); background-size: 100% 100%;">
+                            <table class="w3-table-all" style="width: 50%; margin: 0 auto; margin-top: 40px; border: 2px solid #CCC;">
+                                <tr><td>Home Team</td><td>Accrington</td></tr>
+                                <tr><td>Away Team</td><td>Sunderland</td></tr>
+                                <tr><td>Home Win %</td><td>1</td></tr>
+                                <tr><td>Draw %</td><td>26</td></tr>
+                                <tr><td>Away Win %</td><td>73</td></tr>
+                                <tr><td>Most Likely Result</td><td>1-2</td></tr>
+                                <tr><td>B365 Home Win</td><td>3.8</td></tr>
+                                <tr><td>B365 Draw</td><td>3.5</td></tr>
+                                <tr><td>B365 Away Win</td><td>2.0</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-5 col-xl-5 mb-4 mb-lg-0">
+                            <img src="./data/match_graphs/Accrington_v_Sunderland.png" width="100%" style="margin: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     
-        <tr>
-            <td>E1</td>
-            <td>Wycombe</td>
-            <td>Preston</td>
-            <td>0</td>
-            <td>0.05</td>
-            <td>99.95</td>
-            <td>0-1</td>
-            <td>3.8</td>
-            <td>3.4</td>
-            <td>2.0</td>
-            <td><a href="c:\temp\Wycombe_v_Preston.png"" target="_blank">Detailed Report</a></td>
-        </tr>
+        <div class="simple-modal-wrapper" data-modal-id="modal_22" data-animation-duration="200">
+            <div class="modal-content">
+
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Analysis: Cheltenham v Barrow</p>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-7 col-xl-7 mb-4 mb-lg-0" style="background-image:url('./images/pitch.jpg'); background-size: 100% 100%;">
+                            <table class="w3-table-all" style="width: 50%; margin: 0 auto; margin-top: 40px; border: 2px solid #CCC;">
+                                <tr><td>Home Team</td><td>Cheltenham</td></tr>
+                                <tr><td>Away Team</td><td>Barrow</td></tr>
+                                <tr><td>Home Win %</td><td>72</td></tr>
+                                <tr><td>Draw %</td><td>26</td></tr>
+                                <tr><td>Away Win %</td><td>2</td></tr>
+                                <tr><td>Most Likely Result</td><td>2-1</td></tr>
+                                <tr><td>B365 Home Win</td><td>1.95</td></tr>
+                                <tr><td>B365 Draw</td><td>3.3</td></tr>
+                                <tr><td>B365 Away Win</td><td>4.33</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-5 col-xl-5 mb-4 mb-lg-0">
+                            <img src="./data/match_graphs/Cheltenham_v_Barrow.png" width="100%" style="margin: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     
-        <tr>
-            <td>E1</td>
-            <td>Sheffield Weds</td>
-            <td>Norwich</td>
-            <td>0.02</td>
-            <td>10.51</td>
-            <td>89.47</td>
-            <td>1-2</td>
-            <td>6.5</td>
-            <td>3.8</td>
-            <td>1.57</td>
-            <td><a href="c:\temp\Sheffield Weds_v_Norwich.png"" target="_blank">Detailed Report</a></td>
-        </tr>
+        <div class="simple-modal-wrapper" data-modal-id="modal_23" data-animation-duration="200">
+            <div class="modal-content">
+
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Analysis: Crawley Town v Walsall</p>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-7 col-xl-7 mb-4 mb-lg-0" style="background-image:url('./images/pitch.jpg'); background-size: 100% 100%;">
+                            <table class="w3-table-all" style="width: 50%; margin: 0 auto; margin-top: 40px; border: 2px solid #CCC;">
+                                <tr><td>Home Team</td><td>Crawley Town</td></tr>
+                                <tr><td>Away Team</td><td>Walsall</td></tr>
+                                <tr><td>Home Win %</td><td>97</td></tr>
+                                <tr><td>Draw %</td><td>3</td></tr>
+                                <tr><td>Away Win %</td><td>0</td></tr>
+                                <tr><td>Most Likely Result</td><td>1-0</td></tr>
+                                <tr><td>B365 Home Win</td><td>2.1</td></tr>
+                                <tr><td>B365 Draw</td><td>3.4</td></tr>
+                                <tr><td>B365 Away Win</td><td>3.5</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-5 col-xl-5 mb-4 mb-lg-0">
+                            <img src="./data/match_graphs/Crawley Town_v_Walsall.png" width="100%" style="margin: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     
-        <tr>
-            <td>E2</td>
-            <td>Swindon</td>
-            <td>Gillingham</td>
-            <td>6.59</td>
-            <td>40.36</td>
-            <td>53.05</td>
-            <td>1-2</td>
-            <td>3.0</td>
-            <td>3.5</td>
-            <td>2.3</td>
-            <td><a href="c:\temp\Swindon_v_Gillingham.png"" target="_blank">Detailed Report</a></td>
-        </tr>
+        <div class="simple-modal-wrapper" data-modal-id="modal_24" data-animation-duration="200">
+            <div class="modal-content">
+
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Analysis: Mansfield v Carlisle</p>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-7 col-xl-7 mb-4 mb-lg-0" style="background-image:url('./images/pitch.jpg'); background-size: 100% 100%;">
+                            <table class="w3-table-all" style="width: 50%; margin: 0 auto; margin-top: 40px; border: 2px solid #CCC;">
+                                <tr><td>Home Team</td><td>Mansfield</td></tr>
+                                <tr><td>Away Team</td><td>Carlisle</td></tr>
+                                <tr><td>Home Win %</td><td>0</td></tr>
+                                <tr><td>Draw %</td><td>37</td></tr>
+                                <tr><td>Away Win %</td><td>63</td></tr>
+                                <tr><td>Most Likely Result</td><td>1-2</td></tr>
+                                <tr><td>B365 Home Win</td><td>2.45</td></tr>
+                                <tr><td>B365 Draw</td><td>3.1</td></tr>
+                                <tr><td>B365 Away Win</td><td>3.1</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-5 col-xl-5 mb-4 mb-lg-0">
+                            <img src="./data/match_graphs/Mansfield_v_Carlisle.png" width="100%" style="margin: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     
-        <tr>
-            <td>E2</td>
-            <td>Blackpool</td>
-            <td>Fleetwood Town</td>
-            <td>44.84</td>
-            <td>43.01</td>
-            <td>12.15</td>
-            <td>2-1</td>
-            <td>2.25</td>
-            <td>3.4</td>
-            <td>3.2</td>
-            <td><a href="c:\temp\Blackpool_v_Fleetwood Town.png"" target="_blank">Detailed Report</a></td>
-        </tr>
+        <div class="simple-modal-wrapper" data-modal-id="modal_25" data-animation-duration="200">
+            <div class="modal-content">
+
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Analysis: Port Vale v Newport County</p>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-7 col-xl-7 mb-4 mb-lg-0" style="background-image:url('./images/pitch.jpg'); background-size: 100% 100%;">
+                            <table class="w3-table-all" style="width: 50%; margin: 0 auto; margin-top: 40px; border: 2px solid #CCC;">
+                                <tr><td>Home Team</td><td>Port Vale</td></tr>
+                                <tr><td>Away Team</td><td>Newport County</td></tr>
+                                <tr><td>Home Win %</td><td>0</td></tr>
+                                <tr><td>Draw %</td><td>5</td></tr>
+                                <tr><td>Away Win %</td><td>95</td></tr>
+                                <tr><td>Most Likely Result</td><td>0-2</td></tr>
+                                <tr><td>B365 Home Win</td><td>2.62</td></tr>
+                                <tr><td>B365 Draw</td><td>3.1</td></tr>
+                                <tr><td>B365 Away Win</td><td>2.9</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-5 col-xl-5 mb-4 mb-lg-0">
+                            <img src="./data/match_graphs/Port Vale_v_Newport County.png" width="100%" style="margin: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     
-        <tr>
-            <td>E2</td>
-            <td>Bristol Rvs</td>
-            <td>AFC Wimbledon</td>
-            <td>50.72</td>
-            <td>49.26</td>
-            <td>0.02</td>
-            <td>1-1</td>
-            <td>2.1</td>
-            <td>3.6</td>
-            <td>3.4</td>
-            <td><a href="c:\temp\Bristol Rvs_v_AFC Wimbledon.png"" target="_blank">Detailed Report</a></td>
-        </tr>
+        <div class="simple-modal-wrapper" data-modal-id="modal_26" data-animation-duration="200">
+            <div class="modal-content">
+
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Analysis: Salford v Colchester</p>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-7 col-xl-7 mb-4 mb-lg-0" style="background-image:url('./images/pitch.jpg'); background-size: 100% 100%;">
+                            <table class="w3-table-all" style="width: 50%; margin: 0 auto; margin-top: 40px; border: 2px solid #CCC;">
+                                <tr><td>Home Team</td><td>Salford</td></tr>
+                                <tr><td>Away Team</td><td>Colchester</td></tr>
+                                <tr><td>Home Win %</td><td>50</td></tr>
+                                <tr><td>Draw %</td><td>49</td></tr>
+                                <tr><td>Away Win %</td><td>1</td></tr>
+                                <tr><td>Most Likely Result</td><td>1-0</td></tr>
+                                <tr><td>B365 Home Win</td><td>1.6</td></tr>
+                                <tr><td>B365 Draw</td><td>3.6</td></tr>
+                                <tr><td>B365 Away Win</td><td>6.5</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-5 col-xl-5 mb-4 mb-lg-0">
+                            <img src="./data/match_graphs/Salford_v_Colchester.png" width="100%" style="margin: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     
-        <tr>
-            <td>E2</td>
-            <td>Charlton</td>
-            <td>Shrewsbury</td>
-            <td>0.51</td>
-            <td>7.36</td>
-            <td>92.13</td>
-            <td>1-3</td>
-            <td>2.0</td>
-            <td>3.3</td>
-            <td>4.0</td>
-            <td><a href="c:\temp\Charlton_v_Shrewsbury.png"" target="_blank">Detailed Report</a></td>
-        </tr>
+        <div class="simple-modal-wrapper" data-modal-id="modal_27" data-animation-duration="200">
+            <div class="modal-content">
+
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Analysis: Scunthorpe v Oldham</p>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-7 col-xl-7 mb-4 mb-lg-0" style="background-image:url('./images/pitch.jpg'); background-size: 100% 100%;">
+                            <table class="w3-table-all" style="width: 50%; margin: 0 auto; margin-top: 40px; border: 2px solid #CCC;">
+                                <tr><td>Home Team</td><td>Scunthorpe</td></tr>
+                                <tr><td>Away Team</td><td>Oldham</td></tr>
+                                <tr><td>Home Win %</td><td>10</td></tr>
+                                <tr><td>Draw %</td><td>62</td></tr>
+                                <tr><td>Away Win %</td><td>28</td></tr>
+                                <tr><td>Most Likely Result</td><td>1-1</td></tr>
+                                <tr><td>B365 Home Win</td><td>2.4</td></tr>
+                                <tr><td>B365 Draw</td><td>3.25</td></tr>
+                                <tr><td>B365 Away Win</td><td>3.0</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-5 col-xl-5 mb-4 mb-lg-0">
+                            <img src="./data/match_graphs/Scunthorpe_v_Oldham.png" width="100%" style="margin: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     
-        <tr>
-            <td>E2</td>
-            <td>Crewe</td>
-            <td>Burton</td>
-            <td>5.99</td>
-            <td>37.84</td>
-            <td>56.17</td>
-            <td>1-2</td>
-            <td>2.0</td>
-            <td>3.5</td>
-            <td>3.75</td>
-            <td><a href="c:\temp\Crewe_v_Burton.png"" target="_blank">Detailed Report</a></td>
-        </tr>
+        <div class="simple-modal-wrapper" data-modal-id="modal_28" data-animation-duration="200">
+            <div class="modal-content">
+
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Analysis: Grimsby v Tranmere</p>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-7 col-xl-7 mb-4 mb-lg-0" style="background-image:url('./images/pitch.jpg'); background-size: 100% 100%;">
+                            <table class="w3-table-all" style="width: 50%; margin: 0 auto; margin-top: 40px; border: 2px solid #CCC;">
+                                <tr><td>Home Team</td><td>Grimsby</td></tr>
+                                <tr><td>Away Team</td><td>Tranmere</td></tr>
+                                <tr><td>Home Win %</td><td>0</td></tr>
+                                <tr><td>Draw %</td><td>4</td></tr>
+                                <tr><td>Away Win %</td><td>96</td></tr>
+                                <tr><td>Most Likely Result</td><td>1-2</td></tr>
+                                <tr><td>B365 Home Win</td><td>4.0</td></tr>
+                                <tr><td>B365 Draw</td><td>3.5</td></tr>
+                                <tr><td>B365 Away Win</td><td>1.95</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-5 col-xl-5 mb-4 mb-lg-0">
+                            <img src="./data/match_graphs/Grimsby_v_Tranmere.png" width="100%" style="margin: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     
-        <tr>
-            <td>E2</td>
-            <td>Doncaster</td>
-            <td>Northampton</td>
-            <td>1.29</td>
-            <td>22.02</td>
-            <td>76.69</td>
-            <td>2-3</td>
-            <td>1.9</td>
-            <td>3.5</td>
-            <td>4.1</td>
-            <td><a href="c:\temp\Doncaster_v_Northampton.png"" target="_blank">Detailed Report</a></td>
-        </tr>
-    
-        <tr>
-            <td>E2</td>
-            <td>Hull</td>
-            <td>Oxford</td>
-            <td>99.44</td>
-            <td>0.56</td>
-            <td>0</td>
-            <td>3-1</td>
-            <td>1.9</td>
-            <td>3.6</td>
-            <td>4.0</td>
-            <td><a href="c:\temp\Hull_v_Oxford.png"" target="_blank">Detailed Report</a></td>
-        </tr>
-    
-        <tr>
-            <td>E2</td>
-            <td>Ipswich</td>
-            <td>Plymouth</td>
-            <td>86.16</td>
-            <td>13.01</td>
-            <td>0.83</td>
-            <td>2-1</td>
-            <td>1.95</td>
-            <td>3.6</td>
-            <td>3.75</td>
-            <td><a href="c:\temp\Ipswich_v_Plymouth.png"" target="_blank">Detailed Report</a></td>
-        </tr>
-    
-        <tr>
-            <td>E2</td>
-            <td>Lincoln</td>
-            <td>Rochdale</td>
-            <td>99.99</td>
-            <td>0.01</td>
-            <td>0</td>
-            <td>2-0</td>
-            <td>1.44</td>
-            <td>4.5</td>
-            <td>7.0</td>
-            <td><a href="c:\temp\Lincoln_v_Rochdale.png"" target="_blank">Detailed Report</a></td>
-        </tr>
-    
-        <tr>
-            <td>E2</td>
-            <td>Milton Keynes Dons</td>
-            <td>Accrington</td>
-            <td>20.8</td>
-            <td>74.37</td>
-            <td>4.83</td>
-            <td>1-1</td>
-            <td>2.0</td>
-            <td>3.6</td>
-            <td>3.6</td>
-            <td><a href="c:\temp\Milton Keynes Dons_v_Accrington.png"" target="_blank">Detailed Report</a></td>
-        </tr>
-    
-</table>
+
+    <div class="simple-modal-wrapper" data-modal-id="disclaimer" data-animation-duration="200">
+            <div class="modal-content">
+
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Disclaimer</p>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6 col-xl-6 mb-4 mb-lg-0">
+                            <img src="./images/warning.png">
+                        </div>
+                        <div class="col-6 col-xl-6 mb-4 mb-lg-0">
+                        Hi!
+
+                        This stuff is all for fun, feel free to use it as a guide to some things which might possibly be mispriced but be warned there is a good chance it might be totally wrong.
+
+                        Use at your own risk.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <div class="simple-modal-wrapper" data-modal-id="sourcedata" data-animation-duration="200">
+            <div class="modal-content">
+
+                <p class="modal-heading" style="color: black;background-color:#C0C0C0;">Source Data</p>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6 col-xl-6 mb-4 mb-lg-0">
+                            <img src="./images/homer_data.jpg">
+                        </div>
+                        <div class="col-6 col-xl-6 mb-4 mb-lg-0">
+                        All the source data used in the modelling is taken from the very helpful people at <a href="https://www.football-data.co.uk/" target="_blank">Football Data</a>.  All credit for data complication and production goes to them.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript" src="scripts/simple_modal_min.js"></script>
+    <script type="text/javascript" src="scripts/smpage.js"></script>
 
 </body>
 </html>
